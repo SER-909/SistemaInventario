@@ -1,0 +1,38 @@
+ body {
+     margin         : 0px;
+     padding        : 0px;
+     box-sizing     : border-box;
+     -moz-box-sizing: border-box;
+ }
+
+
+ header {
+     padding-top : 3%;
+     margin-right: 10%;
+     background  : #54B435;
+     color       : #EAEAEA;
+     width       : 100%;
+ }
+
+ header .container .logo h3 {
+     padding-bottom: 7%;
+ }
+
+ header nav a {
+     text-decoration: none;
+     color          : #EAEAEA;
+     padding-left   : 10%;
+     padding-top    : 4%;
+     padding-bottom : 4%;
+     display        : block;
+ }
+
+ header nav hr {
+     border       : #fff solid 2px;
+     border-radius: 15%;
+ }
+
+ header nav a:hover {
+     background: #A8E890;
+     color     : #000;
+ }
