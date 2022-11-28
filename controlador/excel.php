@@ -18,8 +18,6 @@ header("Content-Disposition: attachment; filename=reporte.xls");
             <th>Clave de Invebtario</th>
             <th>Estado</th>
             <th>Tipo</th>
-
-
         </tr>
     </thead>
     <tbody>
@@ -43,3 +41,5 @@ header("Content-Disposition: attachment; filename=reporte.xls");
                 </td>
             </tr>
         <?php } ?>
+    </tbody>
+</table>

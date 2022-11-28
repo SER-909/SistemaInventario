@@ -4,6 +4,19 @@ include("modelo/conexion.php");
 $id = $_GET["id"];
 $sql = $conexion->query("select * from equipos where id=$id");
 
+
+//sesion
+session_start();
+error_reporting(0);
+
+$validar = $_SESSION['nombre'];
+
+if ($validar == null || $validar = '') {
+
+    header("Location: modelo/login.php");
+    die();
+}
+
 ?>
 
 
@@ -20,34 +33,45 @@ $sql = $conexion->query("select * from equipos where id=$id");
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
     <link rel="stylesheet" href="estilos.css">
+
+    <!-- select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/8320905322.js" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
 
     <div class="container-fluid row">
 
-        <header class="header col-3">
-
+    <header class="header col-3">
             <div class="container">
-                <br>
-                <div class="logo">
-                    <h3>Usuario</h3><br>
+                <div class="col text-center">
+                    <h3 class="text-center"><?php echo $_SESSION['nombre']; ?></h3><br>
+                    <a class="btn btn-primary text-center" href="_sesion/cerrarSesion.php">cerrar sesion
+                        <i class="fa fa-power-off" aria-hidden="true"></i>
+                    </a>
                 </div>
                 <br>
                 <nav class="menu">
                     <h4>Registros</h4>
                     <hr class="espacio">
                     <a href="index.php">Registrar - Equipo</a>
-                    <a href="index.php">Registrar - Personal</a>
+                    <a href="registro_empleado.php">Registrar - Personal</a>
+                    <a href="registro_marca.php">Registrar - Marca de PC</a>
+                    <a href="registro_modelo.php">Registrar - Modelo de PC</a>
+                    <a href="registro_so.php">Registrar - Sistema Operativo</a>
                     <br>
                     <h4>Tablas</h4>
                     <hr>
                     <a href="tabla.php">Tabla - Equipos</a>
-                    <a href="tabla.php">Tabla - Personal</a>
+                    <a href="tabla_empleado.php">Tabla - Personal</a>
                     <br>
                     <h4>Analisis</h4>
                     <hr>
-                    <a href="#">Graficos</a>
+                    <a href="grafica.php">Graficos</a>
                     <br>
                     <h4>Sesiones</h4>
                     <hr>
@@ -55,20 +79,17 @@ $sql = $conexion->query("select * from equipos where id=$id");
                     <a href="#">Usuarios</a>
                 </nav>
             </div>
-
         </header>
-
-
 
 
         <div class="col-6 m-auto">
             <h1 class="text-center m-5">Modificar Equipo de Cómputo</h1>
 
             <form class="row" method="POST">
-                <input type="hidden" name="id" value="<?= $_GET["id"];?>">
-                
-                <?php  include "controlador/modificar_registro.php";?>
-                <?php  while($datos = $sql->fetch_object()) { ?>
+                <input type="hidden" name="id" value="<?= $_GET["id"]; ?>">
+
+                <?php include "controlador/modificar_registro.php"; ?>
+                <?php while ($datos = $sql->fetch_object()) { ?>
 
                     <div class="m-auto col-3">
                         <label class="form-label">Marca</label>
@@ -82,17 +103,26 @@ $sql = $conexion->query("select * from equipos where id=$id");
                         <label class="form-label">Numero de Serie </label>
                         <input type="text" class="form-control" name="numSerie" value="<?= $datos->numSerie; ?>">
                     </div>
-                    <div class="m-auto col-3">
-                        <label class="form-label">Clave de Inventario </label>
-                        <input type="text" class="form-control" name="claveInventario" value="<?= $datos->claveInventario; ?>">
-                    </div>
+
 
                     <div class="m-auto col-3">
                         <label class="form-label">Estado</label>
                         <select class="form-select" name="estado" value="<?= $datos->estado; ?>">
-                            <option value="Bueno">Bueno</option>
-                            <option value="Regular">Regular</option>
-                            <option value="Malo">Malo</option>
+                            <?php
+                            if (strcmp($datos->estado, "Bueno") == 0 || strcmp($datos->estado, "BUENO") == 0) {
+                                echo '<option value="Bueno" selected>Bueno</option>';
+                                echo '<option value="Regular">Regular</option>';
+                                echo '<option value="Malo">Malo</option>';
+                            } else if (strcmp($datos->estado, "Regular") == 0 || strcmp($datos->estado, "REGULAR") == 0) {
+                                echo '<option value="Bueno">Bueno</option>';
+                                echo '<option value="Regular" selected>Regular</option>';
+                                echo '<option value="Malo">Malo</option>';
+                            } else if (strcmp($datos->estado, "Malo") == 0 || strcmp($datos->estado, "MALO") == 0) {
+                                echo '<option value="Bueno">Bueno</option>';
+                                echo '<option value="Regular">Regular</option>';
+                                echo '<option value="Malo" selected>Malo</option>';
+                            }
+                            ?>
                         </select>
 
                     </div>
@@ -122,15 +152,20 @@ $sql = $conexion->query("select * from equipos where id=$id");
 
                     <div class="m-auto col-3">
                         <label class="form-label">Sistema Operativo</label>
-                        <select class="form-select" name="so" value="<?= $datos->so; ?>">
-                            <option value="Windows 7 professional">Windows 7 professional</option>
-                            <option value="Windows 7 basic">Windows 7 basic</option>
-                            <option value="Windows 8.0">Windows 8.0</option>
-                            <option value="Windows 8.1">Windows 8.1</option>
-                            <option value="Windows 10 pro">Windows 10 pro</option>
-                            <option value="Windows 10 estandar">Windows 10 estandar</option>
-                            <option value="Windows 11 pro">Windows 11 pro</option>
-                            <option value="Windows 11 estandar">Windows 11 estandar</option>
+                        <select class="form-select" name="id_sistema_operativo">
+                            <?php
+                            $sqlSO = $conexion->query("select * from sistema_operativo");
+                            while ($datosSO = $sqlSO->fetch_object()) {
+                                if ($datos->id_sistema_operativo == $datosSO->id) { ?>
+                                    <option value="<?php echo $datosSO->id; ?>" selected>
+                                        <?php echo $datosSO->so; ?>
+                                    </option>
+                                <?php } else { ?>
+                                    <option value="<?php echo $datosSO->id; ?>">
+                                        <?php echo $datosSO->so; ?>
+                                    </option>
+                            <?php }
+                            } ?>
                         </select>
                     </div>
                     <div class="m-auto col-3">
@@ -164,17 +199,60 @@ $sql = $conexion->query("select * from equipos where id=$id");
                         <label class="form-label">Numero Serial - Mouse</label>
                         <input type="text" class="form-control" name="numSerialMouse" value="<?= $datos->numSerialMouse; ?>">
                     </div>
-
-                    <div class="mb-3 col-12">
-                        <label class="form-label">Asignación</label>
-                        <select class="form-select" name="asignacion">
-                            <option value="desconocido">Desconocido</option>
-                        </select>
-                    </div>
-
                     <div class="mb-3 col-12">
                         <label class="form-label">Obervaciones</label>
                         <textarea class="form-control" rows="3" name="observaciones"><?= $datos->observaciones; ?></textarea>
+                    </div>
+
+
+                    <?php
+                    $empleadoID = 0;
+                    $empleadoNombre = "";
+                    $sqlEmpleado = $conexion->query("select * from empleado where id=$id");
+                    while ($datosEmpleado = $sqlEmpleado->fetch_assoc()) {
+                        $empleadoID = $datosEmpleado['id'];
+                        $empleadoNombre = $datosEmpleado['nombre'];
+                    }
+
+                    $departamentoID = 0;
+                    $departamentoNombre = "";
+                    $sqlDepartamento = $conexion->query("select * from departamento where id=$empleadoID");
+                    while ($datosDepartamento = $sqlDepartamento->fetch_assoc()) {
+                        $departamentoID = $datosDepartamento['id'];
+                        $departemamentoNombre = $datosDepartamento['nombreDep'];
+                    }
+
+                    $empresaID = 0;
+                    $empresaNombre = "";
+                    $sqlEmpresa = $conexion->query("select * from empresa where id=$departamentoID");
+                    while ($datosEmpresa = $sqlEmpresa->fetch_assoc()) {
+                        $empresaID = $datosEmpresa['id'];
+                        $empresaNombre = $datosEmpresa['nombreEmpresa'];
+                    }
+                    ?>
+
+                    <input type="hidden" name="idEmpleado" id="idEmpleado" value="<?= $empleadoID; ?>">
+                    <input type="hidden" name="idDepartamento" id="idDepartamento" value="<?= $departamentoID; ?>">
+                    <input type="hidden" name="idEmpresa" id="idEmpresa" value="<?= $empresaID; ?>">
+
+                    <div class="mb-3 col-12">
+                        <label class="form-label">Filial</label>
+                        <select class="form-select combobox" name="empresa" id="selEmpresa" style="width: 100%;">
+                        </select>
+                    </div>
+                    <div class="mb-3 col-12">
+                        <label class="form-label">Departamento</label>
+                        <select class="form-select combobox" name="departamento" id="selDepartamento" style="width: 100%;">
+                        </select>
+                    </div>
+                    <div class="mb-3 col-12">
+                        <label class="form-label">Asignación</label>
+                        <select class="form-select combobox" name="asignacion" id="selAsignacion" style="width: 100%;">
+                        </select>
+                    </div>
+                    <div class="m-auto col-12">
+                        <label class="form-label">Clave de Inventario </label>
+                        <input type="text" class="form-control" name="claveInventario" value="<?= $datos->claveInventario; ?>">
                     </div>
 
                     <div class="text-center">
@@ -185,15 +263,38 @@ $sql = $conexion->query("select * from equipos where id=$id");
                 <?php } ?>
             </form>
 
-
-
         </div>
     </div>
 
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
-    <script src="controlador/inputs.js"></script>
+    <script src="controlador/js/inputs.js"></script>
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- select2 -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script src="controlador/js/listar_departamento.js"></script>
+
+    <script>
+        
+        $(document).ready(function() {
+            $('.combobox').select2();      
+            listar_empresa();
+        });
+
+        $("#selEmpresa").change(function() {
+            let idempresa = $("#selEmpresa").val();
+            listar_departamento(idempresa);
+        })
+
+        $("#selDepartamento").change(function() {
+            let idDepartamento = $("#selDepartamento").val();
+            listar_empleado(idDepartamento);
+        })
+    </script>
 
 </body>
 

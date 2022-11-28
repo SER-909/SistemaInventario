@@ -1,4 +1,4 @@
-function seleccionarTipo(){
+function (){
     let idTipo = document.getElementById('idTipo');
     let tipo = idTipo.value;
 
