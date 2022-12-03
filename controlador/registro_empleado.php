@@ -1,8 +1,8 @@
 <?php
 
-if(!empty($_POST['nombre'])){
+if(!empty($_POST['btnRegistrar'])){
 
-    if(!empty($_POST['apellidoP']) and !empty($_POST['apellidoM']) and !empty($_POST['departamento']) and !empty($_POST['numEmpleado'])){
+    if(!empty($_POST['nombre']) and !empty($_POST['apellidoP']) and !empty($_POST['apellidoM']) and !empty($_POST['departamento']) and !empty($_POST['numEmpleado'])){
         $nombre = $_POST['nombre'];
         $apellidoP =$_POST['apellidoP'];
         $apellidoM =$_POST['apellidoM'];

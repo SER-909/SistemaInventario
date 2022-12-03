@@ -71,7 +71,7 @@ if ($validar == null || $validar = '') {
             </div>
         </header>
 
-        <div class="col-7 mt-5">
+        <div class="col-7 m-5">
 
             <?php
             include "modelo/conexion.php";
@@ -94,15 +94,9 @@ if ($validar == null || $validar = '') {
                 <thead class="bg-info">
                     <tr>
                         <th scope="col" class="text-center">ID</th>
-                        <th scope="col" class="text-center">Tipo</th>
-                        <th scope="col" class="text-center">Estado</th>
-                        <th scope="col" class="text-center">Marca</th>
-                        <th scope="col" class="text-center">Modelo</th>
-                        <th scope="col" class="text-center">N° Serie</th>
-                        <th scope="col" class="text-center">Clave de Inventario</th>
-                        <th scope="col" class="text-center">Memoria RAM</th>
-                        <th scope="col" class="text-center">Almacenamiento</th>
-                        <th scope="col" class="text-center">S.O</th>
+                        <th scope="col" class="text-center">Rol</th>
+                        <th scope="col" class="text-center">Nombre</th>
+                        <th scope="col" class="text-center">Password</th>
                         <th scope="col" class="text-center"></th>
                     </tr>
                 </thead>
@@ -110,27 +104,20 @@ if ($validar == null || $validar = '') {
 
                     <?php
                     $sql = $conexion->query("
-                    select equipos.id,equipos.tipo,equipos.estado,equipos.numSerie,equipos.claveInventario,equipos.cantidadRam,equipos.cantidadAlmacenamiento,marca.nombre as nombreM,modelo.num,sistema_operativo.so from equipos INNER JOIN modelo ON equipos.id_modelo = modelo.id INNER JOIN marca on modelo.id_marca = marca.id INNER JOIN sistema_operativo ON equipos.id_sistema_operativo = sistema_operativo.id where equipos.activo = 1 GROUP BY equipos.id           
-                    ");
+                    select * from usuarios where activo = 1");
 
                     while ($datos = $sql->fetch_object()) { ?>
                         <tr>
-                            <td><?= $datos->id ?></td>
-                            <td><?= $datos->tipo ?></td>
-                            <td><?= $datos->estado ?></td>
-                            <td><?= $datos->nombreM?></td>
-                            <td><?= $datos->num ?></td>
-                            <td><?= $datos->numSerie ?></td>
-                            <td><?= $datos->claveInventario?></td>
-                            <td><?= $datos->cantidadRam?></td>
-                            <td><?= $datos->cantidadAlmacenamiento?></td>
-                            <td><?= $datos->so?></td>                  
-                            <td>
-                                <a href="ver_equipo.php?id=<?= $datos->id; ?>" class="btn btn-small btn-dark"><i class="fa-solid fa-eye"></i></a><br>
+                            <td class="text-center"><?= $datos->id ?></td>
+                            <td class="text-center"><?= $datos->rol ?></td>
+                            <td class="text-center"><?= $datos->nombre?></td>
+                            <td class="text-center"><?= $datos->password?></td>                
+                            <td class="text-center">
+                                <a href="#" class="btn btn-small btn-dark"><i class="fa-solid fa-eye"></i></a>
 
-                                <a href="modificar_registro.php?id=<?= $datos->id; ?>" class="btn btn-small btn-dark"><i class="fa-solid fa-pen-to-square"></i></a><br>
+                                <a href="modificar_registro.php?id=<?= $datos->id; ?>" class="btn btn-small btn-dark"><i class="fa-solid fa-pen-to-square"></i></a>
 
-                                <a onclick="return eliminar()" href="tabla.php?id=<?= $datos->id ?>" class="btn btn-small btn-dark"><i class="fa-solid fa-trash-can"></i></a><br>
+                                <a onclick="return eliminar()" href="tabla.php?id=<?= $datos->id ?>" class="btn btn-small btn-dark"><i class="fa-solid fa-trash-can"></i></a>
 
                             </td>
                         </tr>
@@ -152,5 +139,3 @@ if ($validar == null || $validar = '') {
     <script src="controlador/js/buscador.js"></script>
 
 </body>
-
-</html>

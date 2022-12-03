@@ -46,9 +46,9 @@ if ($validar == null || $validar = '') {
 
     <div class="container-fluid row">
 
-    <header class="header col-3">
+        <header class="header col-3">
             <div class="container">
-                <div class="col text-center">
+                <div class="col text-center"><br>
                     <h3 class="text-center"><?php echo $_SESSION['nombre']; ?></h3><br>
                     <a class="btn btn-primary text-center" href="_sesion/cerrarSesion.php">cerrar sesion
                         <i class="fa fa-power-off" aria-hidden="true"></i>
@@ -75,8 +75,8 @@ if ($validar == null || $validar = '') {
                     <br>
                     <h4>Sesiones</h4>
                     <hr>
-                    <a href="#">Nuevo Usuario</a>
-                    <a href="#">Usuarios</a>
+                    <a href="registro_usuario.php">Nuevo Usuario</a>
+                    <a href="tabla_usuarios.php">Usuarios</a>
                 </nav>
             </div>
         </header>
@@ -91,14 +91,31 @@ if ($validar == null || $validar = '') {
                 <?php include "controlador/modificar_registro.php"; ?>
                 <?php while ($datos = $sql->fetch_object()) { ?>
 
+
+
                     <div class="m-auto col-3">
                         <label class="form-label">Marca</label>
-                        <input type="tetx" class="form-control" name="marca" value="<?= $datos->marca; ?>">
+                        <?php
+                        $sqlMarca = $conexion->query("select marca.nombre  from equipos INNER JOIN modelo ON equipos.id_modelo = modelo.id INNER JOIN marca on modelo.id_marca = marca.id INNER JOIN sistema_operativo ON equipos.id_sistema_operativo = sistema_operativo.id where equipos.id_modelo = $datos->id_modelo ");
+
+                        while ($datosMarca = $sqlMarca->fetch_object()) { ?>
+                            <input type="text" class="form-control monitor" value="<?= $datosMarca->nombre; ?>" readonly>
+                            <?php break; ?>
+                        <?php  } ?>
                     </div>
+
                     <div class="m-auto col-3">
                         <label class="form-label">Modelo</label>
-                        <input type="text" class="form-control" name="modelo" value="<?= $datos->modelo; ?>">
+                        <?php
+                        $sqlModelo = $conexion->query("select * from modelo where id= $datos->id_modelo");
+                        while ($datosModelo = $sqlModelo->fetch_object()) {
+                            if ($datos->id_modelo == $datosModelo->id) { ?>
+                                <input type="text" class="form-control monitor" value="<?= $datosModelo->num; ?>" readonly>
+
+                        <?php }
+                        } ?>
                     </div>
+                 
                     <div class="m-auto col-3">
                         <label class="form-label">Numero de Serie </label>
                         <input type="text" class="form-control" name="numSerie" value="<?= $datos->numSerie; ?>">
@@ -279,9 +296,8 @@ if ($validar == null || $validar = '') {
     <script src="controlador/js/listar_departamento.js"></script>
 
     <script>
-        
         $(document).ready(function() {
-            $('.combobox').select2();      
+            $('.combobox').select2();
             listar_empresa();
         });
 

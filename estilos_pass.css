@@ -1,0 +1,36 @@
+div.success input {
+    border-color: #2ecc71;
+}
+
+.pass.error input {
+    border-color: #e74c3c;
+}
+
+.pass i {
+    visibility: hidden;
+    position  : static;
+    top       : 40px;
+    right     : 10px;
+}
+
+.success i.fa-check-circle {
+    color     : #2ecc71;
+    visibility: visible;
+}
+
+.fa-exclamation-circle {
+    color     : #e74c3c;
+    visibility: visible;
+}
+
+.pass .alert {
+    color     : #e74c3c;
+    position  : relative;
+    top       : 20%;
+    right     : 5%;
+    visibility: hidden;
+}
+
+.pass.error .alert {
+    visibility: visible;
+}

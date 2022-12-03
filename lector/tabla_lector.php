@@ -36,9 +36,9 @@ if ($validar == null || $validar = '') {
 
     <div class="container-fluid row">
 
-        <header class="header col-3">
+        <header class="header col-3" style="height: 100vh;">
             <div class="container">
-            <div class="col text-center">
+            <div class="col text-center"><br>
                     <h3 class="text-center"><?php echo $_SESSION['nombre'];?></h3><br>
                     <a class="btn btn-primary text-center" href="../_sesion/cerrarSesion.php">cerrar sesion
                         <i class="fa fa-power-off" aria-hidden="true"></i>

@@ -17,16 +17,17 @@ function acceso_user() {
     $_SESSION['nombre']=$nombre;
 
     $consulta= "SELECT * FROM usuarios WHERE nombre='$nombre' AND password='$password'";
+  
     $resultado=mysqli_query($conexion, $consulta);
     $filas=mysqli_fetch_array($resultado);
 
 
-    if($filas['rol'] == 1){ //admin
+    if($filas['rol'] == "Administrador"){ //admin
 
         header('Location: ../index.php');
 
     }
-    else if($filas['rol'] == 2){//lector
+    else if($filas['rol'] == "Normal"){//lector
         header('Location: ../lector/tabla_lector.php');
     }else{
 

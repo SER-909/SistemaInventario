@@ -41,7 +41,7 @@ if ($validar == null || $validar = '') {
 
         <header class="header col-3">
             <div class="container">
-                <div class="col text-center">
+                <div class="col text-center"><br>
                     <h3 class="text-center"><?php echo $_SESSION['nombre']; ?></h3><br>
                     <a class="btn btn-primary text-center" href="_sesion/cerrarSesion.php">cerrar sesion
                         <i class="fa fa-power-off" aria-hidden="true"></i>
@@ -68,8 +68,8 @@ if ($validar == null || $validar = '') {
                     <br>
                     <h4>Sesiones</h4>
                     <hr>
-                    <a href="#">Nuevo Usuario</a>
-                    <a href="#">Usuarios</a>
+                    <a href="registro_usuario.php">Nuevo Usuario</a>
+                    <a href="tabla_usuarios.php">Usuarios</a>
                 </nav>
             </div>
         </header>
@@ -84,13 +84,13 @@ if ($validar == null || $validar = '') {
 
                 <div class="mb-3 col-6">
                     <label class="form-label">Marca</label>
-                    <select class="form-select combobox2" name="marca" id="selMarca">
+                    <select class="form-select combobox2" name="marca" id="selMarca" style="width: 100%;">
                     </select>
                 </div>
 
                 <div class="mb-3 col-6">
                     <label class="form-label">Modelo</label>
-                    <select class="form-select combobox2" name="id_modelo" id="selModelo">
+                    <select class="form-select combobox2" name="id_modelo" id="selModelo" style="width: 100%;">
                     </select>
                 </div>
 

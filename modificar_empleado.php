@@ -40,7 +40,7 @@ if ($validar == null || $validar = '') {
     <div class="container-fluid row">
     <header class="header col-3">
             <div class="container">
-                <div class="col text-center">
+                <div class="col text-center"><br>
                     <h3 class="text-center"><?php echo $_SESSION['nombre']; ?></h3><br>
                     <a class="btn btn-primary text-center" href="_sesion/cerrarSesion.php">cerrar sesion
                         <i class="fa fa-power-off" aria-hidden="true"></i>
@@ -67,8 +67,8 @@ if ($validar == null || $validar = '') {
                     <br>
                     <h4>Sesiones</h4>
                     <hr>
-                    <a href="#">Nuevo Usuario</a>
-                    <a href="#">Usuarios</a>
+                    <a href="registro_usuario.php">Nuevo Usuario</a>
+                    <a href="tabla_usuarios.php">Usuarios</a>
                 </nav>
             </div>
         </header>

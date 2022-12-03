@@ -13,11 +13,21 @@ $con3 = 0;
 $con4 = 0;
 $con5 = 0;
 $con6 = 0;
+$con7 = 0;
+$con8 = 0;
+$con9 = 0;
 
 $cont1 = 0;
 $cont2 = 0;
 $cont3 = 0;
 $cont4 = 0;
+
+$conR1 = 0;
+$conR2 = 0;
+$conR3 = 0;
+$conR4 = 0;
+$conR5 = 0;
+$conR6 = 0;
 
 while ($resultado = mysqli_fetch_assoc($consulta)) {
 
@@ -27,16 +37,44 @@ while ($resultado = mysqli_fetch_assoc($consulta)) {
     $con2++;
   } else if ($resultado['id_sistema_operativo'] == 3) {
     $con3++;
+  } else if ($resultado['id_sistema_operativo'] == 4) {
+    $con4++;
+  } else if ($resultado['id_sistema_operativo'] == 5) {
+    $con5++;
+  } else if ($resultado['id_sistema_operativo'] == 6) {
+    $con6++;
+  } else if ($resultado['id_sistema_operativo'] == 7) {
+    $con7++;
+  }
+  if ($resultado['id_sistema_operativo'] == 8) {
+    $con8++;
+  }
+  if ($resultado['id_sistema_operativo'] == 9) {
+    $con9++;
   }
 
   if (strcmp($resultado['tipo'], "AIO") == 0) {
     $cont1++;
   } else if (strcmp($resultado['tipo'], "MiniPC") == 0) {
-    $cont3++;
+    $cont2++;
   } else if (strcmp($resultado['tipo'], "Laptop") == 0) {
-    $cont2++;
+    $cont3++;
   } else if (strcmp($resultado['tipo'], "Desktop") == 0) {
-    $cont2++;
+    $cont4++;
+  }
+
+  if (strcmp($resultado['cantidadRam'], "1 GB") == 0) {
+    $conR1++;
+  } else if (strcmp($resultado['cantidadRam'], "2 GB") == 0) {
+    $conR2++;
+  } else if (strcmp($resultado['cantidadRam'], "4 GB") == 0) {
+    $conR3++;
+  } else if (strcmp($resultado['cantidadRam'], "8 GB") == 0) {
+    $conR4++;
+  } else if (strcmp($resultado['cantidadRam'], "16 GB") == 0) {
+    $conR5++;
+  } else if (strcmp($resultado['cantidadRam'], "32 GB") == 0) {
+    $conR6++;
   }
 }
 
@@ -49,8 +87,8 @@ $validar = $_SESSION['nombre'];
 
 if ($validar == null || $validar = '') {
 
-    header("Location: modelo/login.php");
-    die();
+  header("Location: modelo/login.php");
+  die();
 }
 
 
@@ -81,46 +119,44 @@ if ($validar == null || $validar = '') {
 
   <div class="container-fluid row">
 
-  <header class="header col-3">
-            <div class="container">
-                <div class="col text-center">
-                    <h3 class="text-center"><?php echo $_SESSION['nombre']; ?></h3><br>
-                    <a class="btn btn-primary text-center" href="_sesion/cerrarSesion.php">cerrar sesion
-                        <i class="fa fa-power-off" aria-hidden="true"></i>
-                    </a>
-                </div>
-                <br>
-                <nav class="menu">
-                    <h4>Registros</h4>
-                    <hr class="espacio">
-                    <a href="index.php">Registrar - Equipo</a>
-                    <a href="registro_empleado.php">Registrar - Personal</a>
-                    <a href="registro_marca.php">Registrar - Marca de PC</a>
-                    <a href="registro_modelo.php">Registrar - Modelo de PC</a>
-                    <a href="registro_so.php">Registrar - Sistema Operativo</a>
-                    <br>
-                    <h4>Tablas</h4>
-                    <hr>
-                    <a href="tabla.php">Tabla - Equipos</a>
-                    <a href="tabla_empleado.php">Tabla - Personal</a>
-                    <br>
-                    <h4>Analisis</h4>
-                    <hr>
-                    <a href="grafica.php">Graficos</a>
-                    <br>
-                    <h4>Sesiones</h4>
-                    <hr>
-                    <a href="#">Nuevo Usuario</a>
-                    <a href="#">Usuarios</a>
-                </nav>
-            </div>
-        </header>
+    <header class="header col-3">
+      <div class="container">
+        <div class="col text-center"><br>
+          <h3 class="text-center"><?php echo $_SESSION['nombre']; ?></h3><br>
+          <a class="btn btn-primary text-center" href="_sesion/cerrarSesion.php">cerrar sesion
+            <i class="fa fa-power-off" aria-hidden="true"></i>
+          </a>
+        </div>
+        <br>
+        <nav class="menu">
+          <h4>Registros</h4>
+          <hr class="espacio">
+          <a href="index.php">Registrar - Equipo</a>
+          <a href="registro_empleado.php">Registrar - Personal</a>
+          <a href="registro_marca.php">Registrar - Marca de PC</a>
+          <a href="registro_modelo.php">Registrar - Modelo de PC</a>
+          <a href="registro_so.php">Registrar - Sistema Operativo</a>
+          <br>
+          <h4>Tablas</h4>
+          <hr>
+          <a href="tabla.php">Tabla - Equipos</a>
+          <a href="tabla_empleado.php">Tabla - Personal</a>
+          <br>
+          <h4>Analisis</h4>
+          <hr>
+          <a href="grafica.php">Graficos</a>
+          <br>
+          <h4>Sesiones</h4>
+          <hr>
+          <a href="registro_usuario.php">Nuevo Usuario</a>
+          <a href="tabla_usuarios.php">Usuarios</a>
+        </nav>
+      </div>
+    </header>
 
-    <div class="col-6 mt-5">
+    <div class="col-8 mt-5">
 
-
-
-
+      <!-- Grafica 1 -->
       <div>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
@@ -137,9 +173,13 @@ if ($validar == null || $validar = '') {
 
               echo "['Windows 7 Professional'," . $con1 . "],";
               echo "['Windows 7 Basic'," . $con2 . "],";
-              echo "['Windows 8.1'," . $con3 . "],";
-              echo "['Windows 10 Pro'," . $con4 . "],";
-              echo "['Windows 10 Estandar'," . $con5 . "],";
+              echo "['Windows 7 Standard'," . $con3 . "],";
+              echo "['Windows 8.0'," . $con4 . "],";
+              echo "['Windows 8.1'," . $con5 . "],";
+              echo "['Windows 10 Home'," . $con6 . "],";
+              echo "['Windows 10 Pro'," . $con7 . "],";
+              echo "['Windows 11 Home'," . $con8 . "],";
+              echo "['Windows 11 Pro'," . $con9 . "],";
               ?>
 
             ]);
@@ -154,8 +194,9 @@ if ($validar == null || $validar = '') {
           }
         </script>
       </div>
-      <div id="piechart" style="width: 900px; height: 500px;"></div>
+      <div id="piechart" style="width: 150%; height: 70vh;"></div>
 
+      <!-- Grafica 2 -->
       <div>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
@@ -171,8 +212,8 @@ if ($validar == null || $validar = '') {
               <?php
 
               echo "['AIO'," . $cont1 . "],";
-              echo "['Laptop'," . $cont2 . "],";
-              echo "['MiniPC'," . $cont3 . "],";
+              echo "['MiniPC '," . $cont2 . "],";
+              echo "['Laptop'," . $cont3 . "],";
               echo "['Desktop'," . $cont4 . "],";
 
               ?>
@@ -189,8 +230,94 @@ if ($validar == null || $validar = '') {
           }
         </script>
       </div>
-      <div id="piechart2" style="width: 900px; height: 500px;"></div>
+      <div id="piechart2" style="width: 150%; height: 70vh;"></div>
 
+      <!-- Grafica 3 -->
+      <!-- <div>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+          google.charts.load('current', {
+            'packages': ['corechart']
+          });
+          google.charts.setOnLoadCallback(drawChart);
+
+          function drawChart() {
+
+            var data = google.visualization.arrayToDataTable([
+              ['Task', 'Hours per Day'],
+              <?php
+              echo "['1 GB'," . $conR1 . "],";
+              echo "['2 GB'," . $conR2 . "],";
+              echo "['4 GB'," . $conR3 . "],";
+              echo "['8 GB'," . $conR4 . "],";
+              echo "['16 GB'," . $conR5 . "],";
+              echo "['32 GB'," . $conR6 . "],";
+
+              ?>
+            ]);
+
+            var options = {
+              title: 'Memoria Ram Instalada'
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart3'));
+
+            chart.draw(data, options);
+          }
+        </script>
+      </div>
+      <div id="piechart3" style="width: 150%; height: 70vh;"></div> -->
+
+      <div>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+          google.charts.load('current', {
+            'packages': ['bar']
+          });
+          google.charts.setOnLoadCallback(drawStuff);
+
+          function drawStuff() {
+            var data = new google.visualization.arrayToDataTable([
+              ['RAM', 'Cantidad de RAM'],
+              <?php
+              echo "['1 GB'," . $conR1 . "],";
+              echo "['2 GB'," . $conR2 . "],";
+              echo "['4 GB'," . $conR3 . "],";
+              echo "['8 GB'," . $conR4 . "],";
+              echo "['16 GB'," . $conR5 . "],";
+              echo "['32 GB'," . $conR6 . "],";
+              ?>
+            ]);
+
+            var options = {
+              width: 800,
+              legend: {
+                position: 'center'
+              },
+              chart: {
+                title: 'Cantidad de Memoria Ram',
+                subtitle: 'Cantidad Instalada'
+              },
+              axes: {
+                x: {
+                  0: {
+                    side: 'bottom',
+                    label: 'RAM'
+                  } // Top x-axis.
+                }
+              },
+              bar: {
+                groupWidth: "100%"
+              }
+            };
+
+            var chart = new google.charts.Bar(document.getElementById('top_x_div'));
+            // Convert the Classic options to Material options.
+            chart.draw(data, google.charts.Bar.convertOptions(options));
+          };
+        </script>
+      </div>
+      <div id="top_x_div" style="width: 150%; height: 60vh; margin-left: 30%;"></div>
 
 
 

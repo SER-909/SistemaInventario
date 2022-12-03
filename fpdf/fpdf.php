@@ -1053,8 +1053,9 @@ protected function _checkoutput()
 			// It contains only a UTF-8 BOM and/or whitespace, let's clean it
 			ob_clean();
 		}
-		else
+		else{
 			$this->Error("Some data has already been output, can't send PDF file");
+		}
 	}
 }
 
